@@ -70,6 +70,7 @@ class Session(ABC):
         reference_dataset: Optional[Dataset] = None,
         corpus_dataset: Optional[Dataset] = None,
         trace_dataset: Optional[TraceDataset] = None,
+        host: str = HOST,
         port: int = PORT,
     ):
         self.primary_dataset = primary_dataset
@@ -94,6 +95,7 @@ class Session(ABC):
             for span in trace_dataset.to_spans():
                 self.traces.put(span)
 
+        self.host = host
         self.port = port
         self.temp_dir = TemporaryDirectory()
         self.export_path = Path(self.temp_dir.name) / "exports"
