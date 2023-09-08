@@ -124,7 +124,7 @@ class AppService(Service):
             "--port",
             str(self.port),
             "--root-path",
-            str(self.root_path)
+            str(self.root_path),
             "datasets",
             "--primary",
             str(self.__primary_dataset_name),

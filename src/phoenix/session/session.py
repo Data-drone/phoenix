@@ -231,6 +231,7 @@ class ThreadSession(Session):
         trace_dataset: Optional[TraceDataset] = None,
         host: Optional[str] = None,
         port: Optional[int] = None,
+        root_path: Optional[str] = None
     ):
         super().__init__(
             primary_dataset=primary_dataset,
@@ -239,6 +240,7 @@ class ThreadSession(Session):
             trace_dataset=trace_dataset,
             host=host or HOST,
             port=port or pick_unused_port(),
+            root_path=root_path or "",
         )
         # Initialize an app service that keeps the server running
         self.app = create_app(
@@ -251,6 +253,7 @@ class ThreadSession(Session):
             app=self.app,
             host=self.host,
             port=self.port,
+            root_path=self.root_path
         ).run_in_thread()
         # start the server
         self.server_thread = next(self.server)
