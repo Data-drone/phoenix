@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Iterable, List, Optional, Set
 import pandas as pd
 from portpicker import pick_unused_port
 
-from phoenix.config import PORT, get_exported_files
+from phoenix.config import PORT, get_exported_files, HOST
 from phoenix.core.model_schema_adapter import create_model_from_datasets
 from phoenix.core.traces import Traces
 from phoenix.datasets.dataset import EMPTY_DATASET, Dataset
