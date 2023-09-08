@@ -94,6 +94,7 @@ class AppService(Service):
     def __init__(
         self,
         export_path: Path,
+        host: str,
         port: int,
         primary_dataset_name: str,
         reference_dataset_name: Optional[str],
@@ -102,6 +103,7 @@ class AppService(Service):
     ):
         self.export_path = export_path
         self.port = port
+        self.host = host
         self.__primary_dataset_name = primary_dataset_name
         self.__reference_dataset_name = reference_dataset_name
         self.__corpus_dataset_name = corpus_dataset_name
@@ -115,6 +117,8 @@ class AppService(Service):
             "main.py",
             "--export_path",
             str(self.export_path),
+            "--host",
+            str(self.host),
             "--port",
             str(self.port),
             "datasets",

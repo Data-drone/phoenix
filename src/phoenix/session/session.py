@@ -173,6 +173,7 @@ class ProcessSession(Session):
         reference_dataset: Optional[Dataset] = None,
         corpus_dataset: Optional[Dataset] = None,
         trace_dataset: Optional[TraceDataset] = None,
+        host: Optional[str] = None,
         port: Optional[int] = None,
     ) -> None:
         super().__init__(
@@ -180,6 +181,7 @@ class ProcessSession(Session):
             reference_dataset=reference_dataset,
             corpus_dataset=corpus_dataset,
             trace_dataset=trace_dataset,
+            host=host or HOST,
             port=port or PORT,
         )
         primary_dataset.to_disc()
@@ -190,6 +192,7 @@ class ProcessSession(Session):
         # Initialize an app service that keeps the server running
         self.app_service = AppService(
             self.export_path,
+            self.host,
             self.port,
             self.primary_dataset.name,
             reference_dataset_name=(
@@ -227,6 +230,7 @@ class ThreadSession(Session):
             reference_dataset=reference_dataset,
             corpus_dataset=corpus_dataset,
             trace_dataset=trace_dataset,
+            host=host,
             port=port or pick_unused_port(),
         )
         # Initialize an app service that keeps the server running
