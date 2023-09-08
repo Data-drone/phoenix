@@ -16,7 +16,7 @@ class ThreadServer(Server):
         port: int,
     ) -> None:
         config = Config(
-            host='0.0.0.0'
+            host='0.0.0.0',
             app=app,
             port=port,
             # TODO: save logs to file
