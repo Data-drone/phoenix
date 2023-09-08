@@ -274,6 +274,7 @@ def launch_app(
     trace: Optional[TraceDataset] = None,
     host: str = HOST,
     port: int = PORT,
+    root_path: str = None,
     run_in_thread: bool = True,
 ) -> Optional[Session]:
     """
@@ -294,6 +295,8 @@ def launch_app(
         The host that the server will listen to
     port: int, optional
         The port on which the server listens.
+    root_path: str, optional
+        Needed for mounting on other paths
     run_in_thread: bool, optional, default=True
         Whether the server should run in a Thread or Process.
 
@@ -324,7 +327,7 @@ def launch_app(
                 "it down and starting a new instance..."
             )
             _session.end()
-        _session = ThreadSession(primary, reference, corpus, trace, host=host, port=port)
+        _session = ThreadSession(primary, reference, corpus, trace, host=host, port=port, root_path=root_path)
         # TODO: catch exceptions from thread
         if not _session.active:
             logger.error(
@@ -333,7 +336,7 @@ def launch_app(
             )
             return None
     else:
-        _session = ProcessSession(primary, reference, corpus, trace, host=host, port=port)
+        _session = ProcessSession(primary, reference, corpus, trace, host=host, port=port, root_path=root_path)
 
     print(f"🌍 To view the Phoenix app in your browser, visit {_session.url}")
     print("📺 To view the Phoenix app in a notebook, run `px.active_session().view()`")
