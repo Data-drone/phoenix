@@ -323,7 +323,7 @@ def launch_app(
             )
             return None
     else:
-        _session = ProcessSession(primary, reference, corpus, trace, port=port)
+        _session = ProcessSession(primary, reference, corpus, trace, host=host, port=port)
 
     print(f"🌍 To view the Phoenix app in your browser, visit {_session.url}")
     print("📺 To view the Phoenix app in a notebook, run `px.active_session().view()`")
