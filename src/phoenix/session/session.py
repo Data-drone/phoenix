@@ -72,6 +72,7 @@ class Session(ABC):
         trace_dataset: Optional[TraceDataset] = None,
         host: str = HOST,
         port: int = PORT,
+        root_path: str = ''
     ):
         self.primary_dataset = primary_dataset
         self.reference_dataset = reference_dataset
@@ -97,6 +98,7 @@ class Session(ABC):
 
         self.host = host
         self.port = port
+        self.root_path = root_path
         self.temp_dir = TemporaryDirectory()
         self.export_path = Path(self.temp_dir.name) / "exports"
         self.export_path.mkdir(parents=True, exist_ok=True)
@@ -177,6 +179,7 @@ class ProcessSession(Session):
         trace_dataset: Optional[TraceDataset] = None,
         host: Optional[str] = None,
         port: Optional[int] = None,
+        root_path: Optional[str] = None
     ) -> None:
         super().__init__(
             primary_dataset=primary_dataset,
@@ -185,6 +188,7 @@ class ProcessSession(Session):
             trace_dataset=trace_dataset,
             host=host or HOST,
             port=port or PORT,
+            root_path=root_path or ""
         )
         primary_dataset.to_disc()
         if isinstance(reference_dataset, Dataset):
@@ -196,6 +200,7 @@ class ProcessSession(Session):
             self.export_path,
             self.host,
             self.port,
+            self.root_path,
             self.primary_dataset.name,
             reference_dataset_name=(
                 self.reference_dataset.name if self.reference_dataset is not None else None

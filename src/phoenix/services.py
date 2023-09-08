@@ -96,6 +96,7 @@ class AppService(Service):
         export_path: Path,
         host: str,
         port: int,
+        root_path: str,
         primary_dataset_name: str,
         reference_dataset_name: Optional[str],
         corpus_dataset_name: Optional[str],
@@ -104,6 +105,7 @@ class AppService(Service):
         self.export_path = export_path
         self.port = port
         self.host = host
+        self.root_path = root_path
         self.__primary_dataset_name = primary_dataset_name
         self.__reference_dataset_name = reference_dataset_name
         self.__corpus_dataset_name = corpus_dataset_name
@@ -121,6 +123,8 @@ class AppService(Service):
             str(self.host),
             "--port",
             str(self.port),
+            "--root-path",
+            str(self.root_path)
             "datasets",
             "--primary",
             str(self.__primary_dataset_name),

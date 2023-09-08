@@ -62,6 +62,7 @@ if __name__ == "__main__":
     parser.add_argument("--export_path")
     parser.add_argument("--host", type=str, default=config.HOST)
     parser.add_argument("--port", type=int, default=config.PORT)
+    parser.add_argument("--root-path", type=str, default="")
     parser.add_argument("--no-internet", action="store_true")
     parser.add_argument("--debug", action="store_false")  # TODO: Disable before public launch
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -128,4 +129,4 @@ if __name__ == "__main__":
         debug=args.debug,
     )
 
-    uvicorn.run(app, host=args.host, port=args.port)
+    uvicorn.run(app, host=args.host, port=args.port, root_path=args.root_path)
