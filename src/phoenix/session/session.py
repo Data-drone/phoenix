@@ -140,7 +140,7 @@ class Session(ABC):
     @property
     def url(self) -> str:
         """Returns the url for the phoenix app"""
-        return _get_url(self.port, self.is_colab)
+        return _get_url(self.host, self.port, self.is_colab)
 
     def get_span_dataframe(
         self,
@@ -232,7 +232,7 @@ class ThreadSession(Session):
             reference_dataset=reference_dataset,
             corpus_dataset=corpus_dataset,
             trace_dataset=trace_dataset,
-            host=host,
+            host=host or HOST,
             port=port or pick_unused_port(),
         )
         # Initialize an app service that keeps the server running
@@ -354,14 +354,14 @@ def close_app() -> None:
     logger.info("Session closed")
 
 
-def _get_url(port: int, is_colab: bool) -> str:
+def _get_url(host: str, port: int, is_colab: bool) -> str:
     """Determines the IFrame URL based on whether this is in a Colab or in a local notebook"""
     if is_colab:
         from google.colab.output import eval_js  # type: ignore
 
         return str(eval_js(f"google.colab.kernel.proxyPort({port}, {{'cache': true}})"))
 
-    return f"http://localhost:{port}/"
+    return f"http://{host}:{port}/"
 
 
 def _is_colab() -> bool:
