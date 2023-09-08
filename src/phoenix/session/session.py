@@ -219,6 +219,7 @@ class ThreadSession(Session):
         reference_dataset: Optional[Dataset] = None,
         corpus_dataset: Optional[Dataset] = None,
         trace_dataset: Optional[TraceDataset] = None,
+        host: Optional[str] = None,
         port: Optional[int] = None,
     ):
         super().__init__(
@@ -237,6 +238,7 @@ class ThreadSession(Session):
         )
         self.server = ThreadServer(
             app=self.app,
+            host=self.host,
             port=self.port,
         ).run_in_thread()
         # start the server
@@ -256,6 +258,7 @@ def launch_app(
     reference: Optional[Dataset] = None,
     corpus: Optional[Dataset] = None,
     trace: Optional[TraceDataset] = None,
+    host: str = HOST,
     port: int = PORT,
     run_in_thread: bool = True,
 ) -> Optional[Session]:
@@ -273,6 +276,8 @@ def launch_app(
         The dataset containing corpus for LLM context retrieval.
     trace: TraceDataset, optional
         **Experimental** The trace dataset containing the trace data.
+    host: str, optional
+        The host that the server will listen to
     port: int, optional
         The port on which the server listens.
     run_in_thread: bool, optional, default=True
@@ -305,7 +310,7 @@ def launch_app(
                 "it down and starting a new instance..."
             )
             _session.end()
-        _session = ThreadSession(primary, reference, corpus, trace, port=port)
+        _session = ThreadSession(primary, reference, corpus, trace, host=host, port=port)
         # TODO: catch exceptions from thread
         if not _session.active:
             logger.error(
