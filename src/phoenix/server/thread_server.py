@@ -15,11 +15,13 @@ class ThreadServer(Server):
         app: Starlette,
         host: str,
         port: int,
+        root_path: str
     ) -> None:
         config = Config(
             app=app,
             host=host,
             port=port,
+            root_path=root_path,
             # TODO: save logs to file
             log_level=logging.ERROR,
         )
