@@ -127,6 +127,7 @@ if __name__ == "__main__":
         traces=traces,
         corpus=None if corpus_dataset is None else create_model_from_datasets(corpus_dataset),
         debug=args.debug,
+        root_path=args.root_path
     )
 
     uvicorn.run(app, host=args.host, port=args.port, root_path=args.root_path)

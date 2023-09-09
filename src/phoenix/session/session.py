@@ -248,6 +248,7 @@ class ThreadSession(Session):
             model=self.model,
             corpus=self.corpus,
             traces=self.traces,
+            root_path=self.root_path
         )
         self.server = ThreadServer(
             app=self.app,

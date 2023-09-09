@@ -1,6 +1,7 @@
 import logging
 from pathlib import Path
 from typing import Optional, Union
+import os
 
 from starlette.applications import Starlette
 from starlette.datastructures import QueryParams
@@ -110,6 +111,7 @@ def create_app(
     corpus: Optional[Model] = None,
     traces: Optional[Traces] = None,
     debug: bool = False,
+    root_path: str = ''
 ) -> Starlette:
     graphql = GraphQLWithContext(
         schema=schema,
@@ -155,7 +157,7 @@ def create_app(
             Mount(
                 "/",
                 app=Static(
-                    directory=SERVER_DIR / "static",
+                    directory=os.path.join(SERVER_DIR,root_path) / "static",
                     html=True,
                 ),
                 name="static",
