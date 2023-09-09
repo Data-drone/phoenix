@@ -157,7 +157,7 @@ def create_app(
             Mount(
                 "/",
                 app=Static(
-                    directory=os.path.join(SERVER_DIR,root_path) / "static",
+                    directory=SERVER_DIR / root_path) / "static",
                     html=True,
                 ),
                 name="static",
